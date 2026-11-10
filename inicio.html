@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title>Sistema de Segurança</title>
+        <link rel="stylesheet" href="inicio.css">
+    </head>
+    <body>
+        <header>
+        <div>
+            <h2>Monitoramento da Fachada</h2>
+            <small id="currentTime">--:--:--</small>
+        </div>
+        <div>
+            <span id="scheduleStatusBadge" class="status-badge inactive-schedule">Fora do Horário</span>
+            <span class="status-badge online">ESP32 Conectado</span>
+        </div>
+    </header>
+
+    <div class="dashboard">
+
+        <!-- Card de Status da Fachada -->
+        <div id="mainAlertCard" class="card status-card standby">
+            <h3>Status da Fachada</h3>
+            <div id="statusText">SISTEMA EM STANDBY</div>
+            <div class="distance-display"><span id="distanceValue">--</span> <span>cm</span></div>
+            <p id="buzzerStatusText">Buzzer: Inativo</p>
+        </div>
+        <!-- Card de Configuração do Timer / Horário -->
+        <div class="card">
+            <h3>Configurações do Timer e Sensor</h3>
+            
+            <div class="timer-group">
+                <label>Horário de Início do Monitoramento:</label>
+                <input type="time" id="startTime" value="18:00">
+
+                <label>Horário de Término do Monitoramento:</label>
+                <input type="time" id="endTime" value="06:00">
+
+                <label>Distância Limite para Alerta (cm):</label>
+                <input type="number" id="thresholdDistance" value="100" min="5" max="400">
+
+                <label>
+                    <input type="checkbox" id="enableAudioBrowser" checked>
+                    Tocar alarme no navegador também
+                </label>
+            </div> 
+            <button class="btn btn-secondary" onclick="testarBuzzer()">Testar Som</button>
+        </div>
+
+    </div>
+
+    <!-- Tabela de Registro -->
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>Data / Hora</th>
+                <th>Distância Medida</th>
+                <th>Ação Disparada</th>
+            </tr>
+        </thead>
+        <tbody id="historyLog">
+            <!-- Eventos serão inseridos aqui via JS -->
+        </tbody>
+    </table>
+        <script src="js/inicio.js"></script>
+    </body>
+</html>
