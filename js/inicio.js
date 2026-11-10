@@ -118,6 +118,26 @@ const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             </tr>`;
             table.insertAdjacentHTML('afterbegin', row);
         }
+        // Função para verificar se o ESP32 está respondendo
+        function checarConexaoESP32() {
+            const espBadge = document.getElementById('espStatusBadge');
+
+    // Substitua pelo IP real do seu ESP32 na rede do restaurante
+                fetch('http://192.168.1.100/status', { method: 'GET', mode: 'no-cors' })
+            .then(() => {
+            // Se chegou aqui, a placa está online
+                espBadge.className = "status-badge online";
+                espBadge.innerText = "ESP32 Conectado";
+        })
+            .catch(() => {
+            // Se deu erro (placa desligada ou sem rede)
+                espBadge.className = "status-badge offline";
+                espBadge.innerText = "ESP32 Desconectado";
+        });
+}
+
+// Roda a checagem de conexão a cada 5 segundos
+setInterval(checarConexaoESP32, 5000);
 
         // Executa a checagem do relógio a cada 1 segundo
         setInterval(verificarHorarioAtivo, 1000);

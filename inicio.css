@@ -42,6 +42,11 @@ header small {
     border: 1px solid transparent;
 }
 .online { 
+    background-color: #98c054; 
+    color: #5c3d2e; 
+    border-color: #ddaa6d;
+}
+.offline { 
     background-color: #ebdcd0; 
     color: #5c3d2e; 
     border-color: #ddaa6d;
