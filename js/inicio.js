@@ -1,3 +1,4 @@
+const espIP= "http://192.168.1.200";
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function emitirBeep(frequencia = 440, duracaoMs = 200) {
             if (audioCtx.state === 'suspended') {
@@ -72,10 +73,10 @@ const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 enviarComandoESP32("BUZZER_OFF");
             }
         }
-        // Essa linha de código serve para quando tiver o ip do esp
-        function enviarComandoESP32(comando) {
-            // fetch(`http://192.168.1.100/control?cmd=${comando}`);
-            console.log("Comando enviado ao ESP32:", comando);
+         function enviarComandoESP32(comando) {
+            fetch(`${espIP}/control?cmd=${comando}`)
+                .then(response => console.log("Comendo enviado ao ESP32:", comando))
+                .catch(error => console.error("Erro de comunicação com o ESP32:", error));
         }
         function adicionarLog(distancia, acao) {
             const table = document.getElementById('historyLog');
@@ -90,12 +91,12 @@ const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         }
         function checarConexaoESP32() {
             const espBadge = document.getElementById('espStatusBadge');
-                fetch('http://192.168.1.100/status')
+            fetch(`${espIP}/status`)
             .then(response => {
-            if (!response.ok) {
-                throw new Error("Erro na rede");
-            }
-            return response.json();
+                if (!response.ok) {
+                    throw new Error("Erro na rede");
+                }
+                return response.json();
             })
             .then(data => {
                 espBadge.className = "status-badge online";
